@@ -30,7 +30,8 @@ public class JpaInDepthApplication implements CommandLineRunner {
        repository.save(new Course("save-springboot"));
        repository.playingWithEntityManager();
        LOGGER.info("using named query -> " + repository.usingNamedQuery().toString());
-       LOGGER.info("using named queries-> " + repository.usingNameQueries().toString());
-
+       LOGGER.info("using named queries -> " + repository.usingNameQueries().toString());
+       LOGGER.info("using native queries -> " + repository.usingNativeQuery().toString());
+       LOGGER.info("using native queries with parameters -> " + repository.usingNativeQuery().toString());
     }
 }

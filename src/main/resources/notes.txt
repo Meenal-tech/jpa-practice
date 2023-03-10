@@ -1,0 +1,161 @@
+
+Get Production Ready Environment with Sprinboot -
+
+1.  Profiles -
+
+    • Application have diff env(s) : dev, stage, prod etc
+    •
+    • diff env needs diff database and diff web servers.
+    •
+    • so in order to provide different configuration for diff env we can make ise of Profiles in springboot.
+    •  In order to get this done, what we can do is -
+    •  lets consider that we have 2 profiles or we are working in 2 env – prod and dev
+    •  now, we need to make 2 application.properties files.
+    •  Namely – application-dev.properties and application-prod.properties.
+    • Now in application.properties (main file), we need to write = spring.profiles.active = dev or prod (whichever our choice is)
+    •  now, in the newly created application files, we can put the configurations which we need, ex – we need debug logs in dev env, then we can put – logging.level.org.springframework=debug inapplication-dev.properties file.
+    • Likewise, in other files also, we can do this.
+
+
+
+
+
+2. ConfigurationProperties -
+
+
+    • in order to use the specific url or values which are mentioned in the application.properties files, we need to use an annotation - “@Configurationproperties(perfix= “<name of the service>”)”
+    • now, on using this annotation on the controller class, inside which we are defining the service, we can use the values given in the application.properties file.
+    • Example – in the “sprinboot-revision” project, we have a class – “CurrencyServiceConfiguration” class, and in this projetc we are using the “dev” profile, hence “application-dev.properties” file is getting used.
+    • And since, we have already given values for particular service in the properties file, hence the values are returned when the service gets the GET request.
+
+
+
+
+
+In order to run a jar, we need to give following instruction -
+
+java -jar <name of the jar file>
+
+and we get the name of the JAR file, after we hit the command – “mvn clean install” in the path, where our project is.
+
+
+Whatever is mentioned after “building jar . . . . . . . <name of the jar file>”
+
+
+
+
+
+
+
+JPA and Hibernate Udemy Course -
+
+1. in JPA we just need to define / mention the entities, that is, we just need to tell what are the tables with which we need to map the object class.
+
+2. and JPA, by itself, make the queries, we just need to use the already prepared methods.
+
+3. also, we need to define the relationships between the objects / entity tables.
+
+4. the class which talks to the database, is called DAO class.
+
+
+
+
+
+
+
+
+JDBC -
+
+
+5. In order to do the manipulation in the data present in the database, we use follwing methods of Jdbc in the code -
+
+
+1. query() - used when we need to query for a table/data.
+
+2. update() - in order to update/insert/delete the data.
+
+	while using this method, just give the respective sql query as 	one of the parameters. Rest the method will be same.
+
+
+3. queryForObject() - used to query for a particular object / row.
+
+4.  we use RowMapper, when we query for the data, because, after we query data, we need to map ot to the proper POJO class, hence the mapper does this work.
+
+5.
+
+
+
+
+JPA -
+
+    • JPA is an Api or an Interface and Hibernate is the popular implementation of it.
+    • Hibernate is popular ORM framework.
+    • JPA is a standered way of object relational mapping.
+    • Relational mappings means, to map an instance / object with a table of a database.
+    • When we are using @Entity on any class, and while we are using in memory database (H2), then Springboot automatically triggers schema update, i.e it create a table by its own, so we wont be needing to create a table in data.sql file.
+    • We just need to populate the data. Using insert command.
+    • In JPA, we use EntityManager, which has methods, such as – findAll(), merge() etc
+    • if we want to query the data, i.e to see data / row from database, we use this method.
+    • And if in case we want to store new data entry / update any existing data, we can use – merge() method.
+    • Merge() method basically works as – it sees if the data’s primary key exists or not, if it does, then it updates the data with the values passed in arguments.
+    • If the primary key’s does not match the value of the passed arguments primary key equivalent parameter’s value, then it make a new entry in the database.
+
+
+JPQL – in order to retrive all the rows of a table, we need to use JPQL (java persistence query language).
+
+    • We need to create a NamedQuery
+    • insert the annotation - “@NamedQuery(name = “find_all_persons”, query = “select p from Person”)”.
+    • Here, since JPA deals with the Entity class, hence we need to write the query according to that.
+
+
+
+
+
+
+
+
+
+JUnit -
+
+    • we usually use @Test annotation on every method, which we need to write as unit test cases.
+    • Now, the execution of these methods are not confirmed, but it is sure that the execution will be there
+    • now, in order to make any method execute before / after the specific method, we can use annotations like – “BeforeEach”, “@AfterEach” etc.
+    • If we need to setup few things, before we would want to run the test cases, then we can use - “@BeforeAll”
+    • this annotation makes a method execute before the execution of the methods.
+
+
+
+Playing with Entity Manager -
+
+    • @Transactional annotation maked sure that whatever changes we make inside the block of method, (even without EntityManger instance directly) then those changes will be relfected in the database.
+    • Basically entity manager keeps track of all the changes done in a particular transaction.
+
+See the code present in – “jpa-in-depth” project
+
+
+
+we have created a method -> playingWithEntityManger() in the CourseRepository class.
+
+- in that, we got the concept of diff features offered by entity manager.
+
+- entity manager keeps track of the instances / objects which it manages in its scope.
+
+- example, here c1 and c2 are maanaged by the emtity manager (em).
+
+- there are few mehtods which we can make use of – like [detach, flush etc]
+
+- flush( ) method sends the data just before it to the database.
+
+- detach(<instance / object>) - this method takes inside it the object, which we need to detach, and em stops tracking the changes which we make on this object.
+
+- clear( ) - this method will make the em stop tracking the object within its scope.
+
+
+
+JPA and Hibernate Table annotations -
+
+    1.  @Table – this is given when the name of the table in the database and the Entity class is diff.
+    2. @Column – this is to impose any kind of data constraints. i.e if we want the data entered in a particular column not be a null, then we can use -> @Column(nullable = false)
+    3. we cant have more than one @NameQuery annotation, hence we need to use -> @NamedQueries annotation.
+    4. Which takes inside it, an array of @NamedQuery annotations.
+    5. If in case we need to write Native Queries in place of JPQL, then we can use that, by using the createNativeQuery() method of the Entity Manager class.
