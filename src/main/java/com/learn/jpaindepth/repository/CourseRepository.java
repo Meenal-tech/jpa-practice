@@ -33,4 +33,21 @@ public class CourseRepository {
         return c;
     }
 
+    public void playingWithEntityManager() {
+        Course c1 = new Course("Angular in 100 steps");
+        save(c1);
+        em.flush();
+        Course c2 = new Course("React in 100 steps");
+        save(c2);
+
+        // detach make the em stop tracking any changes which we make.
+        em.detach(c1);
+
+        // this will make the em stop tracking all the objects / instance which it is tracking.
+        em.clear();
+
+        c1.setName("angular-updated");
+        c2.setName("react-updated");
+    }
+
 }

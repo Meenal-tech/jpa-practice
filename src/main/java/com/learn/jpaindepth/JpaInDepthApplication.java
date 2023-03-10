@@ -19,9 +19,12 @@ public class JpaInDepthApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        repository.findById(1);
+        /*repository.findById(1);
         repository.deleteById(3);
         repository.save(new Course(20, "JPA"));
-        repository.save(new Course("save-springboot"));
+        repository.save(new Course("save-springboot"));*/
+
+        repository.playingWithEntityManager();
+
     }
 }
