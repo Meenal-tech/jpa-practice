@@ -1,10 +1,13 @@
 package com.learn.jpaindepth.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@NamedQueries(value = {
+        @NamedQuery(name = "query_for_selecting_100_steps",
+                query = "select c from Course c where name like '%100 steps'"),
+        @NamedQuery(name = "query_all_courses", query = "select c from Course c")
+})
 public class Course {
 
     @Id

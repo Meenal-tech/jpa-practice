@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Transactional
 public class CourseRepository {
@@ -48,6 +50,14 @@ public class CourseRepository {
 
         c1.setName("angular-updated");
         c2.setName("react-updated");
+    }
+
+    public List<Course> usingNamedQuery() {
+        return em.createNamedQuery("query_all_courses", Course.class).getResultList();
+    }
+
+    public List<Course> usingNameQueries() {
+        return em.createNamedQuery("query_for_selecting_100_steps", Course.class).getResultList();
     }
 
 }
