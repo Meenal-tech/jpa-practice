@@ -1,9 +1,12 @@
 package com.learn.jpaindepth.repository;
 
 import com.learn.jpaindepth.entity.Course;
+import com.learn.jpaindepth.entity.Review;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +16,8 @@ import java.util.Queue;
 @Repository
 @Transactional
 public class CourseRepository {
+
+    Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     EntityManager em;
@@ -78,4 +83,20 @@ public class CourseRepository {
         return query.getResultList();
     }
 
+    public void addReviewForCourses(int id, List<Review> reviews) {
+        // getting the course
+        Course course = findById(id);
+
+        for (Review review: reviews) {
+            // getting the reviews
+            course.addReview(review);
+
+            // setting the relation with the course
+            review.setCourse(course);
+
+            // saving into the database
+            em.persist(review);
+        }
+
+    }
 }

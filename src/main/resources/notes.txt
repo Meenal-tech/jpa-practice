@@ -159,3 +159,102 @@ JPA and Hibernate Table annotations -
     3. we cant have more than one @NameQuery annotation, hence we need to use -> @NamedQueries annotation.
     4. Which takes inside it, an array of @NamedQuery annotations.
     5. If in case we need to write Native Queries in place of JPQL, then we can use that, by using the createNativeQuery() method of the Entity Manager class.
+
+
+
+Establishing Relationships between Tables of Database -
+
+
+    1. OneToOne - here, this kind of relationships means that we will have the primary key of one table as an foreign
+                  key in the other table or vice-versa.
+
+                  in our example, of having OneToOne relation b/w -> Student and Passport table, we are giving Student
+                  the ownership since, we are creating the instance of Passport in the Student table.
+                  So, this means that we spring will create the make the primary key of passport as foreign key
+                  in the student table.
+
+           -> in order to check the output and see the schema formed, just go to h2-console and write the query -
+
+            SELECT * FROM student s, passport p
+            where s.passport_id = p.id;
+
+       - giving a value to fetch attribute of @OneToOne() annotation makes sure that when we are relating two tables,
+        then no "JOINS" takes place, or no extra execution takes place of the other table.
+
+       - and when we will be needing the value of the other table, then only the query hibernate would run the query
+        and we will get the results.
+
+       - ex - we have a Student class, when we try to execute any operations through entity manager for Student,
+        then automatically Hibernate would run the JOIN query in order to fetch the Passport details as well.
+
+       - but, since we dont need this extra execution, hence we gave the fetch type as LAZY.
+
+   - In Hibernate terminology, Session means -> Persistence Context.
+    We use @Transactional because we need any operation (which altogether might be combination of few operations,
+    to succeed, and if any intermediate operation fails, then whole transaction should fail).
+
+    so this is made sure by this annotation.
+
+
+
+doubt - code is crashing when removing the log from "getPassportDetailsByStudent()" method in Student Repository class.
+
+
+====================================================================================================================================================
+
+
+    2. @OneToMany and @ManyToMany Relationship - while working for this kind of relationship, we need to design the
+    database in such a way that, the primary key of the Entity which on the (One) side is mapped as the foreign key
+    of the (Many) side of the Entity.
+
+        ex - we have Course and Reviews Entities, now 1 Course can have multiple or 1 or no reviews.
+        and Many Reviews can be for 1 Course.
+
+        so, while designing the database, we will be putting the "course_id" as foreign key in the Review class.
+        and hence - "Review" class will be the owning side, hence "mappedBy" attribute will be given in the Course class.
+
+    By default, the fetch type on the @OneToMany side of the relation is always of type - "LAZY".
+
+    ***ToOne default fetching is Eager Fetching
+    and ***ToMany is always Lazy Fetching
+
+============================================================================================================================
+
+
+    3. @ManyToMany relation - in this kind of relation, we need to 1 Entity can be mapped to multiple Entites and
+    vice - versa.
+
+    Hence, whenever there is Many to many mappings, there is a concept of formation of Junction / Join table,
+    In this table, we will have 2 columns which will be foreign keys referencing to the primary key of two tables.
+
+    like in our example - we have 2 Entities - Course and Student (course and student tables respectively)
+
+    so here, we will have two junction tables - course_student, and student_course which will have 2
+    foreign keys - course_id and student_id
+
+now, to avoid the formation of 2 join tables, we need to make one of the classes as the owning side
+so, we can choose any of the 2 classes. and give the attribute "mappedBy" in the "@ManyToMany" annotation.
+
+    -> By default, in May to many type of relationship, there is Lazy fetching, if we want we can make it
+    do Eager fetching.
+
+============================================================================================================
+
+NOTE : Always remember the following steps while mapping the Entities as part of Database Design
+
+1. think of which type of mapping is required.
+
+2. decide the owning side Entity.
+
+3. according to 2nd step, give the value of the attribute - "mappedBy" in the class which is NOT the owning side.
+
+4. set the getters and setters in the respective entities.
+
+5. while working with Many To Many, any of the Entitity can be the owning side.
+remember to give the @JoinTable values in the owning side of the Entity.
+
+
+
+
+
+

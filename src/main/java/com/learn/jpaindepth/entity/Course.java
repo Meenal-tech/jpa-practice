@@ -2,6 +2,9 @@ package com.learn.jpaindepth.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @NamedQueries(value = {
         @NamedQuery(name = "query_for_selecting_100_steps",
@@ -14,6 +17,20 @@ public class Course {
     @GeneratedValue
     private int id;
     private String name;
+
+    @OneToMany(mappedBy = "course")
+    private List<Review> reviews = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "courses")
+    private List<Student> students = new ArrayList<>();
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void addStudent(Student student) {
+        this.students.add(student);
+    }
 
     protected Course() {
     }
@@ -45,5 +62,17 @@ public class Course {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void addReview(Review review) {
+        this.reviews.add(review);
+    }
+
+    public void removeReviews(Review review) {
+        this.reviews.remove(review);
     }
 }
