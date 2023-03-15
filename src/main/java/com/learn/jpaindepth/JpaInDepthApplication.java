@@ -56,5 +56,15 @@ public class JpaInDepthApplication implements CommandLineRunner {
         // @ManyToMany : Course and Student
         studentRepository.getCoursesFromStudent();
         studentRepository.saveStudentAndCourse(new Student("lisa"), new Course("lisa-course"));
+        studentRepository.jpqlCoursesWithoutStudents();
+        studentRepository.jpqlCoursesWithAtleast2Students();
+        studentRepository.jpqlCoursesOrderedByStudents();
+        studentRepository.jpqlStudentsPassportWithSpecificPattern();
+        studentRepository.join();
+        studentRepository.leftJoin();
+
+        studentRepository.getCoursesWithNoStudents();
+        studentRepository.joinUsingCriteriaQuery();
+
     }
 }

@@ -2,7 +2,7 @@ insert into course(id, name)
 values (10, 'Spring'), (20, 'Sprintboot in 100 Steps'), (30, 'AWS');
 
 insert into passport(id, number)
-values (201, 'N1234'),
+values (201, 'N432'),
        (202, 'L1234'),
        (204, 'K1234');
 
@@ -19,7 +19,7 @@ values (801, '5', 'Great Course', 10),
 insert into student_course(student_id, course_id)
 values (301, 10),
        (301, 20),
-       (305, 30);
+       (305, 20);
 
 
 

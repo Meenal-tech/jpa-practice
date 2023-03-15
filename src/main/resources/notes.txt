@@ -250,8 +250,76 @@ NOTE : Always remember the following steps while mapping the Entities as part of
 
 4. set the getters and setters in the respective entities.
 
-5. while working with Many To Many, any of the Entitity can be the owning side.
+5. while working with Many To Many, any of the Entity can be the owning side.
 remember to give the @JoinTable values in the owning side of the Entity.
+
+
+===================================================================================================================
+
+Queries with Entities with JPQL -
+
+methods present in the StudentRepository for jpql, have the queries written using JPQL.
+
+    1. Joins - there are 3 types of joins which can be used with JPQL -> JOIN, LEFT JOIN, CROSS JOIN
+
+    2. JOIN will only join the matching id data
+
+    3. LEFT JOIN will also fetch the data which have no students
+
+    4. CROSS JOIN will actually represent the data in n * n form.
+
+==============================================================================================================
+
+
+    TRANSACTION MANAGEMENT -
+
+    1. Atomicity - this means that either all the steps in the transaction should be executed,
+                    or it should be rolled back altogether.
+
+    2. Consistency - when a transaction is executed, it should leave in a consistent state, i.e
+                    example, if we are transfering some amount from A to B, then after the transaction is done,
+                    then the total amount in both the accounts together should be same irrespective of the fact that
+                    the transaction is successful or not.
+
+    3. Isolation -
+
+    4. Durability - it means that the end result should be persisted after the process of transaction has happened.
+
+
+    ========================================================================================================
+
+
+    UNDERSTANDING THE TYPES OF READS -
+
+    1. Dirty Read - it happens when there are many transactions happening in parallel, and updated value of one gets
+    read by the transaction 2 even before the 1st trans. is completed / finished.
+
+    2. Non - Repeatable Read - it happens when the value is read before and after a transaction,
+    but we get diff values at diff time, because of the other transaction that is executed.
+
+    3. Phanthom Read - when we get different number of rows back, during the same transaction.
+
+
+    =========================================================================================================
+
+   Things to Remember while using @Transactional Annotation -
+
+    1. this annotation is provided by hibernate and spring framework.
+
+    2. if our application is interacting with only one database, then hibernate's annotation is good to use.
+        but if we have many databases, which our app is interacting with, then spring framework's annotation is better.
+
+    3. also, while giving the annotation, we could give the type of isolation as the value of the attribute.
+
+    "read uncommitted, read committed" "serializable" etc.
+
+
+
+
+
+
+
+
 
 
 
