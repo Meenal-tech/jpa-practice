@@ -3,6 +3,7 @@ package com.learn.jpaindepth;
 import com.learn.jpaindepth.entity.Course;
 import com.learn.jpaindepth.entity.Review;
 import com.learn.jpaindepth.entity.Student;
+import com.learn.jpaindepth.repository.CourseJPARepository;
 import com.learn.jpaindepth.repository.CourseRepository;
 import com.learn.jpaindepth.repository.StudentRepository;
 import jakarta.transaction.Transactional;
@@ -26,6 +27,9 @@ public class JpaInDepthApplication implements CommandLineRunner {
 
     @Autowired
     StudentRepository studentRepository;
+
+    @Autowired
+    CourseJPARepository courseJPARepository;
 
     public static void main(String[] args) {
         SpringApplication.run(JpaInDepthApplication.class, args);
@@ -65,6 +69,8 @@ public class JpaInDepthApplication implements CommandLineRunner {
 
         studentRepository.getCoursesWithNoStudents();
         studentRepository.joinUsingCriteriaQuery();
+
+        courseJPARepository.findById(10);
 
     }
 }

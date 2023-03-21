@@ -313,6 +313,23 @@ methods present in the StudentRepository for jpql, have the queries written usin
 
     "read uncommitted, read committed" "serializable" etc.
 
+================================================================================================================
+
+Caching with Hibernate and JPA -
+
+    1. there are many layers which are present in our application. [UI, business layer, data layer, database]
+    2. now, in order to reduce the network round trip, we use cache mechanism using JPA / Hibernate.
+    3. there are 2 levels of caching.
+    4. when any details are requested by the service layer, it is fetched and kept in the persistence context
+       now, when the details are requested again, it will directly pull from the cache and return it.
+
+       remember - the FLC (first level cache) is within the boundaries of the particular single transaction.
+    5. second level cache comes across multiple transactions.
+
+       SLC will typically store the data which is common to all the users of the application
+
+
+        PERSISTENCE CONTEXT -> FIRST LEVEL CACHE -> SECOND LEVEL CACHE -> DATABASE
 
 
 
